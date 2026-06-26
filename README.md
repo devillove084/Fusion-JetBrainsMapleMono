@@ -1,80 +1,166 @@
-<h1 align="center">JetBrains Maple Mono</h1>
-<h3 align="center">- JetBrains Mono + Maple Mono -</h3>
-</br>
+# Lilex Maple Mono
 
-## 自我介绍
-**JetBrains Maple Mono**: 一只基于 **Github Workflows (Bash)** 的 [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) + [Maple Mono](https://github.com/subframe7536/maple-font) 合成字体
+> 一个从 `Fusion-JetBrainsMapleMono` 分叉出来的个人构建版：用 **Lilex** 替换原来的 JetBrains Mono，并使用最新 **Maple Mono v7** 作为 CJK/Nerd Font 字形来源。
 
-* 适用平台: Any
+## 这是什么
 
-## 字形特征
-* 完美融合，Maple Mono 补充 JetBrains Mono 中日字形空缺
-* 高可读性，等宽无衬线，中英文 2:1 宽完美对齐
-* 丰富字重，智能连字，Nerd Font，Hints 原生支持
-* 实时更新，构建合成优化发布全流程自动化
+**Lilex Maple Mono** 是一个融合字体：
 
-![Font Showcase](https://github.com/user-attachments/assets/6587588d-1a9d-4ee7-a0f9-8dd2e7f417e0)
+- 拉丁字母、代码符号、连字风格来自 [Lilex](https://github.com/mishamyrt/Lilex)
+- 中文、日文、Nerd Font 图标来自 [Maple Mono](https://github.com/subframe7536/maple-font) 的 `MapleMonoNormal-NF-CN`
+- 默认输出字体族名为 `Lilex Maple Mono`
+- 输出文件名 / PostScript 名使用 `LilexMapleMono-*`
 
-## 下载地址
-1. **Github (latest): [https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono/releases/latest](https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono/releases/latest)**
-2. Github (preview): [https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono/releases/tag/pre](https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono/releases/tag/pre)
+这个 fork 和上游原项目的主要区别：
 
-## 下载哪个
-发布文件按 **JetBrainsMapleMono-[NF/XX]-[NR/XX]-[NL/XX]-[HT/XX].zip** 的格式命名:
+1. **不再使用 JetBrains Mono** 作为英文字形来源
+2. **默认使用 Lilex 2.700**
+3. **默认使用 Maple Mono v7.9** 的 release 产物，而不是从源码重新构建 Maple
+4. **构建脚本改为本地脚本 `build_lilex_maple.sh`**
+5. 原上游的 JetBrains 自动构建 workflow 已禁用，避免误发旧项目产物
 
-1. XX: 占位符，表示该字体没有增加这一特性
-2. NF: Nerd Font，为部分开发工具、命令行终端、代码编辑器等提供图标支持 (会导致字体文件体积略微增大)
-3. NR: CN Narrow，缩小中日字体间距 (会导致 中英文 / 日英文 不再 2:1 宽完美对齐)
-4. NL: No Ligatures，禁用连字
-5. HT: Hinted，使字体在低分辨率屏幕上 (<=1080P) 的渲染更加均匀 (可能会导致字体在高分辨率屏幕上的渲染略微模糊)
+## 推荐下载
 
-> 如果依然不清楚如何选择请下载 **JetBrainsMapleMono-XX-XX-XX-XX.zip**
+高分屏 / 4K+ / macOS / Windows 缩放环境，推荐使用 unhinted 版：
 
-## 注意事项
-1. 如果在 Visual Studio 中使用本字体，请务必在 `设置 -> 文本编辑器 -> 高级` 中将 `文本格式设置方法` 设置为 `理想`，否则可能导致字体渲染不均匀
-2. 如果需要在 VS Code 中启用连字，请在 `settings.json` 中添加以下配置 `"editor.fontLigatures": true`，反之删除
+```text
+LilexMapleMono-NF-XX-XX-XX.zip
+```
 
-## CDN 托管
-ZSFT: [https://fonts.zeoseven.com/items/521](https://fonts.zeoseven.com/items/521)
+低分屏或觉得字形发虚时，可以试 hinted 版：
 
-## 脚本流程
-1. 每 5 - 30 分钟自动向上游 JetBrains Mono & Maple Mono 存储库**检查 Release 和 Commit 更新**
+```text
+LilexMapleMono-NF-XX-XX-HT.zip
+```
 
-> 可手动选择跳过检查更新强制合成字体
+文件名含义：
 
-2. 如有更新则**构建、合成字体，并执行一系列字体优化流程**
+| 标记 | 含义 |
+| --- | --- |
+| `NF` | 包含 Nerd Font 图标 |
+| `XX` | 占位符，表示没有启用该额外变体 |
+| `NL` | No Ligatures，移除连字 |
+| `HT` | Hinted，适合低分屏 |
+| 最后一段 `XX` | Unhinted，适合高分屏 |
 
-> 字体优化流程: 覆写元数据，设置锚点顺序，插入 Instr 和 Hint 信息，添加极值控制点，整理轮廓和起始点，清理冗余控制点，舍入控制点坐标，移除重叠路径
+> 不建议同时安装 hinted 和 unhinted 两套同名字体，可能导致系统或编辑器选错 face。
 
-3. 如构建、合成、优化成功则**将字体发布到 Github Release** (Release 发布为 latest，Commit 发布在 preview)
+## 编辑器配置示例
 
-> 完整执行一次脚本流程约需耗时 3h
+Zed：
 
-## 实时监测
-最近一次检查更新的时间:
+```json
+{
+  "buffer_font_family": "Lilex Maple Mono",
+  "buffer_font_features": {
+    "calt": true,
+    "zero": true,
+    "ss01": true,
+    "ss02": true,
+    "ss03": true,
+    "ss04": true,
+    "cv01": true,
+    "cv03": true,
+    "cv10": true,
+    "cv11": true,
+    "cv13": true,
+    "cv15": true
+  }
+}
+```
 
-* 北京时间: <!--BJT_TIME-->2026-06-25 17:35:29<!--BJT_TIME-->
-* UTC 时间: <!--UTC_TIME-->2026-06-25 09:35:29<!--UTC_TIME-->
+如果觉得 `Regular 400` 偏轻，可以在编辑器里使用 `500` 字重：
 
-## 未来路线
-1. 添加可变字重版本
-2. 添加无连字版本
-3. 直接基于资源圆体或思源黑体以获得更大的自定义空间，如自定义笔画末端弧度以及包含更多字符集等
+```json
+{
+  "buffer_font_family": "Lilex Maple Mono",
+  "buffer_font_weight": 500
+}
+```
 
-## 致谢名单
-* **JetBrains Mono: 为本项目提供所有非中日字形设计**
-* **Maple Mono: 为本项目提供所有中日字形设计**
-* **Resource Han Rounded: 为本项目提供所有中日基础字形设计**
-* **Source Han Sans: 为本项目提供所有中日基础字形设计**
+## 本地构建
 
-## 开发者
-**Space Time**
+依赖：
 
-## 联系方式
-1. **邮箱: Zeus6_6@163.com**
-2. 我的[其他项目](https://github.com/SpaceTimee/Sheas-Cealer)的 QQ 群: 964102080，1034315671，716266896，338919498
+- `fontforge`
+- `fonttools` / `ttx`
+- `gftools`
+- `curl`
+- `unzip`
+- `zip`
+- `ftcli` 可选，用于修正 monospace 元数据
 
-## 开源协议
-[OFL-1.1](https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono?tab=OFL-1.1-1-ov-file)
+快速构建：
 
-•ᴗ•
+```sh
+./build_lilex_maple.sh
+```
+
+使用原 CI 风格的慢速 FontForge 优化流程：
+
+```sh
+./build_lilex_maple.sh --optimize
+```
+
+后台运行优化构建：
+
+```sh
+mkdir -p logs
+nohup ./build_lilex_maple.sh --optimize > logs/build-lilex-maple-optimized.log 2>&1 &
+echo $! > logs/build-lilex-maple-optimized.pid
+```
+
+查看进度：
+
+```sh
+tail -f logs/build-lilex-maple-optimized.log
+```
+
+只构建部分样式：
+
+```sh
+./build_lilex_maple.sh --styles Regular,Bold,Italic,BoldItalic
+```
+
+常用选项：
+
+| 选项 | 说明 |
+| --- | --- |
+| `--optimize` | 使用原 CI 的慢速优化流程 |
+| `--no-nerd` | 使用不带 Nerd Font 的 Maple CN |
+| `--no-ligatures` | 移除连字 |
+| `--styles LIST` | 只构建指定样式 |
+| `--lilex-version VER` | 指定 Lilex release tag |
+| `--maple-version VER` | 指定 Maple Mono release tag |
+| `--no-proxy` | 不使用 GitHub 下载代理 |
+
+脚本默认使用 `https://gh-proxy.org/` 加速下载 GitHub release zip。
+
+## 字体特性
+
+Lilex 提供的主要 OpenType features 包括：
+
+```text
+calt zero ss01 ss02 ss03 ss04 cv01 ... cv15
+```
+
+其中：
+
+- `calt`：代码连字/上下文替换
+- `zero` / `cv04` / `cv14`：不同的零字形，建议三选一
+- `cv02` / `cv03`：不同的 `g` 字形，建议二选一
+- `ss01`：恢复部分逻辑操作符箭头风味
+- `ss02`：等号相关连字变体
+- `ss03`：更细的反斜杠风格
+- `ss04` / `cv15`：`#` 相关变体
+- `cv13`：括号风格变体
+
+## 致谢
+
+- [Lilex](https://github.com/mishamyrt/Lilex)：拉丁、代码符号、连字与 OpenType 风格来源
+- [Maple Mono](https://github.com/subframe7536/maple-font)：CJK、Nerd Font、中文/日文字形来源
+- 原项目 [Fusion-JetBrainsMapleMono](https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono)：字体融合流程参考
+
+## 许可证
+
+本项目及生成字体遵循 [SIL Open Font License 1.1](./OFL.txt)。

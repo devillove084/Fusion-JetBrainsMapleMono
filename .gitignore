@@ -1,0 +1,9 @@
+.build/
+.cache/
+.venv-tools/
+dist/
+logs/
+*.zip
+*.ttf
+*.ttx
+*.fix

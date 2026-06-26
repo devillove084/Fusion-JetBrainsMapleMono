@@ -1,0 +1,8 @@
+#!/usr/bin/fontforge
+
+Open($2);
+MergeFonts($1);
+SetFontNames($3, $4, $5, $6);
+SetFontOrder(2);
+Generate($7);
+Close();
